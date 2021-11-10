@@ -173,6 +173,13 @@ object Parameters {
   val PARAM_INTERNAL_SKIP_WRITE_WHEN_WRITING_EMPTY_DATAFRAME: String = knownParam(
     "internal_skip_write_when_writing_empty_dataframe"
   )
+  // Internal option to use dummy prefix to write a DataFrame
+  // without any partitions. By default, it it is 'true'.
+  // This option may be removed without any notice in any time.
+  // Introduced since Spark Connector 2.9.3
+  val PARAM_INTERNAL_USE_DUMMY_PREFIX_TO_WRITE_EMPTY_DATAFRAME: String = knownParam(
+    "internal_use_dummy_prefix_to_write_empty_dataframe"
+  )
 
   // Internal option to use sync mode to execute query and COPY INTO TABLE command.
   // By default, it it is 'false'.
@@ -655,6 +662,9 @@ object Parameters {
     }
     def skipWriteWhenWritingEmptyDataFrame: Boolean = {
       isTrue(parameters.getOrElse(PARAM_INTERNAL_SKIP_WRITE_WHEN_WRITING_EMPTY_DATAFRAME, "false"))
+    }
+    def useDummyPrefixToWriteEmptyDataFrame: Boolean = {
+      isTrue(parameters.getOrElse(PARAM_INTERNAL_USE_DUMMY_PREFIX_TO_WRITE_EMPTY_DATAFRAME, "true"))
     }
     def isExecuteQueryWithSyncMode: Boolean = {
       isTrue(parameters.getOrElse(PARAM_INTERNAL_EXECUTE_QUERY_IN_SYNC_MODE, "false"))
